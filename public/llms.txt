@@ -1,0 +1,31 @@
+# Kalkulasi.id
+
+Kalkulasi.id adalah situs kalkulator finansial gratis untuk masyarakat Indonesia.
+
+## Tentang Situs
+
+- Nama: Kalkulasi.id
+- URL: https://kalkulasi.id
+- Bahasa: Indonesia (konten), dengan istilah bilingual (Indonesia/Inggris)
+- Topik: kalkulator finansial, investasi, trading, perpajakan, keuangan pribadi, KPR
+
+## Kategori Kalkulator
+
+1. Kredit Properti & KPR (KPR, uang muka, kelayakan KPR)
+2. Investasi & Portofolio (DCA, bunga majemuk, nilai masa depan, pensiun/FIRE)
+3. Trading Saham & Kripto (untung/rugi, break even, position sizing, leverage, likuidasi, stop loss/take profit)
+4. Keuangan Pribadi (dana darurat, anggaran, net worth, pelunasan utang)
+5. Perpajakan (PPh 21, PPh 23, estimasi pajak)
+6. Pinjaman & Cicilan (pinjaman, angsuran, amortisasi)
+7. Konversi & Simulasi (kurs, inflasi, persentase, rasio keuangan)
+
+## Prinsip Konten
+
+- Setiap kalkulator disertai penjelasan konsep, formula, cara pakai, dan FAQ
+- Konten dalam bahasa Indonesia; istilah teknis mengikuti keputusan bilingual
+- Hasil kalkulator bersifat estimasi untuk tujuan edukasi, bukan saran keuangan
+- Referensi dari sumber otoritatif: OJK, BI, DJP, BPS
+
+## Penafian
+
+Semua hasil kalkulator bersifat estimasi untuk keperluan edukasi. Bukan merupakan saran investasi atau keuangan profesional.
