@@ -9,7 +9,7 @@ import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { FAQSection } from "@/components/seo/FAQSection";
 import { RelatedLinks } from "@/components/content/RelatedLinks";
 import { ReferenceList } from "@/components/content/ReferenceList";
-import { ContentCallout } from "@/components/content/ContentCallout";
+import { ToolClientWrapper } from "./ToolClientWrapper";
 
 interface Props {
   params: Promise<{ kategori: string; slug: string }>;
@@ -51,7 +51,7 @@ export default async function ToolPage({ params }: Props) {
     <>
       <JsonLd schema={schemaObjects} />
 
-      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
         {/* Breadcrumb */}
         <Breadcrumbs
           items={[
@@ -63,68 +63,99 @@ export default async function ToolPage({ params }: Props) {
         />
 
         {/* Hero */}
-        <div className="mt-6 mb-8 space-y-3">
-          <div className="text-sm font-medium text-blue-600">{kategoriLabel}</div>
-          <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl">{tool.nama}</h1>
+        <div className="mt-6 mb-8 space-y-2">
+          <span
+            className="inline-block rounded-full px-3 py-1 text-xs font-semibold"
+            style={{ backgroundColor: "var(--orange-dim)", color: "var(--orange)" }}
+          >
+            {kategoriLabel}
+          </span>
+          <h1 className="text-3xl font-bold sm:text-4xl" style={{ color: "var(--text-primary)" }}>
+            {tool.nama}
+          </h1>
           {tool.namaAlternatif.length > 0 && (
-            <p className="text-sm text-gray-500">
+            <p className="text-sm" style={{ color: "var(--text-muted)" }}>
               Dikenal juga sebagai: {tool.namaAlternatif.slice(0, 3).join(", ")}
             </p>
           )}
-          <p className="text-lg text-gray-600">{tool.ringkasan}</p>
-        </div>
-
-        {/* Calculator placeholder — diisi ToolClientWrapper per tool */}
-        <div className="mb-10 rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 p-8 text-center">
-          <p className="text-gray-500 font-medium">Kalkulator {tool.nama}</p>
-          <p className="text-sm text-gray-400 mt-1">
-            Form input interaktif akan ditampilkan di sini.
+          <p className="text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+            {tool.ringkasan}
           </p>
         </div>
 
+        {/* ─── Calculator ─── */}
+        <div className="mb-12">
+          <ToolClientWrapper tool={tool} />
+        </div>
+
         {/* Deskripsi */}
-        <section className="mb-10 space-y-4">
-          <p className="text-gray-700 leading-relaxed">{tool.deskripsiPanjang}</p>
+        <section className="mb-12">
+          <p className="leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+            {tool.deskripsiPanjang}
+          </p>
         </section>
 
-        {/* Cara Pakai */}
+        {/* Cara Menggunakan — numbered cards */}
         {tool.caraPakai.length > 0 && (
-          <section className="mb-10 space-y-4">
-            <h2 className="text-2xl font-bold text-gray-900">Cara Menggunakan</h2>
-            <ol className="space-y-3">
+          <section className="mb-12 space-y-4">
+            <h2 className="flex items-center gap-2 text-xl font-bold" style={{ color: "var(--text-primary)" }}>
+              Cara Menggunakan {tool.nama}
+            </h2>
+            <div className="space-y-3">
               {tool.caraPakai.map((langkah, i) => (
-                <li key={i} className="flex gap-3">
-                  <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-700">
+                <div
+                  key={i}
+                  className="flex gap-4 rounded-xl border p-4"
+                  style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border)" }}
+                >
+                  <span
+                    className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+                    style={{ backgroundColor: "var(--orange)" }}
+                  >
                     {i + 1}
                   </span>
-                  <span className="text-gray-700">{langkah}</span>
-                </li>
+                  <p className="pt-1 text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                    {langkah}
+                  </p>
+                </div>
               ))}
-            </ol>
+            </div>
           </section>
         )}
 
-        {/* Formula */}
+        {/* Rumus & Logika */}
         {tool.formula && (
-          <section className="mb-10 space-y-3">
-            <h2 className="text-2xl font-bold text-gray-900">Formula</h2>
-            <div className="rounded-xl bg-gray-900 px-5 py-4">
-              <code className="font-mono text-sm text-green-400">{tool.formula}</code>
+          <section className="mb-12 space-y-4">
+            <h2 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>
+              Rumus &amp; Logika
+            </h2>
+            <div className="rounded-xl p-5" style={{ backgroundColor: "#0f172a" }}>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-widest" style={{ color: "#64748b" }}>
+                Formula
+              </p>
+              <code
+                className="block whitespace-pre-wrap font-mono text-sm leading-relaxed"
+                style={{ color: "#10b981" }}
+              >
+                {tool.formula}
+              </code>
             </div>
+
             {tool.variableDefinitions && Object.keys(tool.variableDefinitions).length > 0 && (
-              <div className="rounded-xl border border-gray-200 overflow-hidden">
+              <div className="overflow-hidden rounded-xl border" style={{ borderColor: "var(--border)" }}>
                 <table className="w-full text-sm">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-4 py-2 text-left font-semibold text-gray-700">Variabel</th>
-                      <th className="px-4 py-2 text-left font-semibold text-gray-700">Definisi</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
+                  <tbody>
                     {Object.entries(tool.variableDefinitions).map(([varName, definisi]) => (
-                      <tr key={varName}>
-                        <td className="px-4 py-2 font-mono font-medium text-blue-600">{varName}</td>
-                        <td className="px-4 py-2 text-gray-600">{definisi}</td>
+                      <tr key={varName} style={{ borderBottom: "1px solid var(--border)" }}>
+                        <td
+                          className="w-1/3 px-4 py-3 font-mono font-semibold"
+                          style={{ color: "var(--orange)", backgroundColor: "var(--bg-secondary)" }}
+                        >
+                          {varName}
+                        </td>
+                        <td className="px-4 py-3 text-sm" style={{ color: "var(--text-secondary)" }}>
+                          {definisi}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -136,35 +167,67 @@ export default async function ToolPage({ params }: Props) {
 
         {/* Contoh */}
         {tool.contoh && (
-          <section className="mb-10 space-y-3">
-            <h2 className="text-2xl font-bold text-gray-900">Contoh Perhitungan</h2>
-            <ContentCallout type="info">{tool.contoh}</ContentCallout>
+          <section className="mb-12 space-y-3">
+            <h2 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>
+              Contoh Perhitungan
+            </h2>
+            <div
+              className="rounded-xl border-l-4 p-5"
+              style={{
+                borderLeftColor: "var(--blue)",
+                backgroundColor: "var(--bg-secondary)",
+                borderTop: "1px solid var(--border)",
+                borderRight: "1px solid var(--border)",
+                borderBottom: "1px solid var(--border)",
+              }}
+            >
+              <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                {tool.contoh}
+              </p>
+            </div>
           </section>
         )}
 
         {/* Batasan */}
         {tool.batasan.length > 0 && (
-          <section className="mb-10 space-y-3">
-            <h2 className="text-2xl font-bold text-gray-900">Catatan & Batasan Asumsi</h2>
-            <ContentCallout type="warning">
-              <ul className="space-y-1.5 list-disc list-inside">
+          <section className="mb-12 space-y-3">
+            <h2 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>
+              Catatan &amp; Batasan Asumsi
+            </h2>
+            <div
+              className="rounded-xl border-l-4 p-5"
+              style={{
+                borderLeftColor: "var(--amber)",
+                backgroundColor: "var(--bg-secondary)",
+                borderTop: "1px solid var(--border)",
+                borderRight: "1px solid var(--border)",
+                borderBottom: "1px solid var(--border)",
+              }}
+            >
+              <ul className="space-y-1.5">
                 {tool.batasan.map((b, i) => (
-                  <li key={i}>{b}</li>
+                  <li key={i} className="flex items-start gap-2 text-sm" style={{ color: "var(--text-secondary)" }}>
+                    <span className="mt-0.5 font-bold" style={{ color: "var(--amber)" }}>›</span>
+                    {b}
+                  </li>
                 ))}
               </ul>
-            </ContentCallout>
+            </div>
           </section>
         )}
 
         {/* FAQ */}
         {tool.faq.length > 0 && (
-          <div className="mb-10">
+          <section className="mb-12">
+            <h2 className="mb-5 text-xl font-bold" style={{ color: "var(--text-primary)" }}>
+              Pertanyaan Umum
+            </h2>
             <FAQSection faqs={tool.faq} />
-          </div>
+          </section>
         )}
 
-        {/* Related Tools & Internal Links */}
-        <div className="mb-10 space-y-6">
+        {/* Related Tools */}
+        <div className="mb-12 space-y-6">
           {tool.internalLinks.length > 0 && (
             <RelatedLinks title="Tool Terkait" links={tool.internalLinks} />
           )}
@@ -175,16 +238,20 @@ export default async function ToolPage({ params }: Props) {
 
         {/* Referensi */}
         {tool.referensi.length > 0 && (
-          <div className="mb-8">
+          <div className="mb-10">
             <ReferenceList referensi={tool.referensi} />
           </div>
         )}
 
-        {/* Trust / Disclaimer */}
-        <div className="rounded-xl bg-gray-50 border border-gray-200 px-5 py-4 text-xs text-gray-500 space-y-1">
+        {/* Disclaimer */}
+        <div
+          className="rounded-xl border p-4 text-xs space-y-1"
+          style={{ backgroundColor: "var(--bg-secondary)", borderColor: "var(--border)", color: "var(--text-muted)" }}
+        >
           <p>
-            <strong>Penafian:</strong> Hasil kalkulator ini bersifat estimasi untuk tujuan
-            edukasi dan perencanaan. Bukan merupakan saran investasi atau keuangan profesional.
+            <strong style={{ color: "var(--text-secondary)" }}>Penafian:</strong> Hasil kalkulator
+            bersifat estimasi untuk tujuan edukasi dan perencanaan. Bukan merupakan saran
+            investasi atau keuangan profesional.
           </p>
           <p>Terakhir diperbarui: {tool.updatedAt}</p>
         </div>

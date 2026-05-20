@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 import type { FAQ } from "@/lib/validators/tool-validator";
 
 interface FAQSectionProps {
@@ -14,31 +14,40 @@ export function FAQSection({ faqs }: FAQSectionProps) {
   if (faqs.length === 0) return null;
 
   return (
-    <section className="space-y-3">
-      <h2 className="text-2xl font-bold text-gray-900">Pertanyaan yang Sering Ditanyakan</h2>
-      <div className="divide-y divide-gray-200 rounded-xl border border-gray-200">
-        {faqs.map((faq, i) => (
-          <div key={i}>
-            <button
-              onClick={() => setOpenIndex(openIndex === i ? null : i)}
-              className="flex w-full items-center justify-between px-5 py-4 text-left text-gray-900 hover:bg-gray-50 transition-colors"
-              aria-expanded={openIndex === i}
+    <div className="space-y-2">
+      {faqs.map((faq, i) => (
+        <div
+          key={i}
+          className="overflow-hidden rounded-xl border"
+          style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-card)" }}
+        >
+          <button
+            onClick={() => setOpenIndex(openIndex === i ? null : i)}
+            className="flex w-full items-center justify-between px-5 py-4 text-left transition-colors"
+            aria-expanded={openIndex === i}
+            style={{ color: "var(--text-primary)" }}
+          >
+            <span className="pr-4 font-medium text-sm sm:text-base">{faq.pertanyaan}</span>
+            <span
+              className="flex-shrink-0 rounded-full p-0.5"
+              style={{
+                color: "var(--orange)",
+                backgroundColor: "var(--orange-dim)",
+              }}
             >
-              <span className="font-medium pr-4">{faq.pertanyaan}</span>
-              <ChevronDown
-                className={`h-5 w-5 flex-shrink-0 text-gray-500 transition-transform ${
-                  openIndex === i ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-            {openIndex === i && (
-              <div className="px-5 pb-4 text-gray-600 leading-relaxed">
-                {faq.jawaban}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </section>
+              {openIndex === i ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+            </span>
+          </button>
+          {openIndex === i && (
+            <div
+              className="border-t px-5 pb-4 pt-3 text-sm leading-relaxed"
+              style={{ borderColor: "var(--border)", color: "var(--text-secondary)" }}
+            >
+              {faq.jawaban}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
   );
 }
