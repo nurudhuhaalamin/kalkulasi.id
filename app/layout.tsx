@@ -4,6 +4,7 @@ import "./globals.css";
 import { SITE } from "@/lib/constants/site";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { buildWebSiteSchema, buildOrganizationSchema } from "@/lib/schema/organization.schema";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 const geist = Geist({
   variable: "--font-geist-sans",
@@ -39,10 +40,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang={SITE.language} className={`${geist.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-gray-900">
-        <JsonLd schema={[buildWebSiteSchema(), buildOrganizationSchema()]} />
-        {children}
+    <html lang={SITE.language} className={geist.variable} suppressHydrationWarning>
+      <body className="min-h-screen flex flex-col antialiased">
+        <ThemeProvider>
+          <JsonLd schema={[buildWebSiteSchema(), buildOrganizationSchema()]} />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

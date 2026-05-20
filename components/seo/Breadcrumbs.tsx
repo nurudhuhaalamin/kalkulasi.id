@@ -6,22 +6,28 @@ interface BreadcrumbItem {
   href?: string;
 }
 
-interface BreadcrumbsProps {
-  items: BreadcrumbItem[];
-}
-
-export function Breadcrumbs({ items }: BreadcrumbsProps) {
+export function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
   return (
-    <nav aria-label="Breadcrumb" className="flex items-center gap-1 text-sm text-gray-500">
+    <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1 text-xs">
       {items.map((item, i) => (
         <span key={i} className="flex items-center gap-1">
-          {i > 0 && <ChevronRight className="h-3 w-3 flex-shrink-0" />}
+          {i > 0 && (
+            <ChevronRight className="h-3 w-3 flex-shrink-0" style={{ color: "var(--text-muted)" }} />
+          )}
           {item.href && i < items.length - 1 ? (
-            <Link href={item.href} className="hover:text-gray-900 transition-colors">
+            <Link
+              href={item.href}
+              className="link-hover transition-colors"
+              style={{ color: "var(--text-muted)" }}
+            >
               {item.label}
             </Link>
           ) : (
-            <span className="text-gray-900 font-medium" aria-current="page">
+            <span
+              className="font-medium"
+              aria-current="page"
+              style={{ color: "var(--accent)" }}
+            >
               {item.label}
             </span>
           )}
